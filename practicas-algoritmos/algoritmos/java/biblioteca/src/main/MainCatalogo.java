@@ -23,7 +23,7 @@ public class MainCatalogo {
 		Catalogo catalogo = new Catalogo(10);
 		//TODO: pruebe los métodos agregarLibro y buscarPorTitulo
 		libro2.agregarLibro();
-		System.out.println("Catalogo:\n" + catalogo);
+		System.out.println("Catalogo:\n" + catalogo); //prueba
 	} 
 
 }
