@@ -1,9 +1,9 @@
 package main;
-import lista.ListaArreglo;
+import lista.ListaEnlazada;
 
-public class Main{
+public class Main2 {
     public static void main(String[] args){
-        ListaArreglo<Integer> listaDeEnteros = new ListaArreglo<>(10);
+        ListaEnlazada<Integer> listaDeEnteros = new ListaEnlazada<Integer>();
         for(int i = 0; i < 10; i++){
             listaDeEnteros.agregar(i);
         }
@@ -18,8 +18,9 @@ public class Main{
         System.out.println(listaDeEnteros.repOK());
         System.out.println(listaDeEnteros.toString());
 
-        ListaArreglo <Integer> listaDeEnteros2 = new ListaArreglo<>(10);
-        listaDeEnteros2 = (ListaArreglo) listaDeEnteros.subLista(1, 4);
+        ListaEnlazada <Integer> listaDeEnteros2 = new ListaEnlazada<>(10);
+        listaDeEnteros2 = (ListaEnlazada<Integer>) listaDeEnteros.subLista(1, 4);
         System.out.println(listaDeEnteros2.toString());
     }
+
 }

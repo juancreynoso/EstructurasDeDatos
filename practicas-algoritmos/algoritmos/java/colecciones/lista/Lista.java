@@ -2,7 +2,6 @@ package lista;
 
 /**
 * La interface {@code Lista} representa una secuencia de objetos. El usuario de esta interface tiene control de acceso, inserción, y eliminación indexada de elementos.
-* 
 * Las operaciones ofrecidas por cualquier implementación de esta clase son:
 * <ul>
 *   <li> agregar	: Agrega un nuevo elemento al final de la lista, y retorna si la operación fue exitosa.</li>

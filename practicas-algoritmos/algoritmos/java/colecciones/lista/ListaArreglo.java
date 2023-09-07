@@ -35,7 +35,7 @@ public class ListaArreglo<T> implements Lista<T> {
 
     /**
      * Construye una nueva lista vacía con una capacidad determinada mayor a 0.
-     * @param la capacidad de la cola.
+     * @param capacidad la capacidad de la cola.
      * @throws IllegalArgumentException si {@code capacidad} es menor o igual a 0.
      */
     public ListaArreglo(int capacidad) {
@@ -52,8 +52,8 @@ public class ListaArreglo<T> implements Lista<T> {
     public boolean agregar(T elem) {
         if (elementos >= CAPACIDAD_POR_DEFECTO)
             throw new IllegalArgumentException("la lista está llena");
-        items[elementos] = elem;
-        elementos++;
+        this.items[elementos] = elem;
+        this.elementos++;
         return true;
     }
 
@@ -100,11 +100,12 @@ public class ListaArreglo<T> implements Lista<T> {
     public T eliminar(int indice) {
         if ((indice < 0) || (indice > this.elementos))
             throw new IndexOutOfBoundsException("indice fuera de rango");
-        if (indice > this.elementos)
+        if (indice < this.elementos)
             for (int i = indice; i < this.elementos-1; i++) {
                 this.items[i] = this.obtener(i+1);
             }
-            return this.obtener(indice);
+        this.elementos--;
+        return this.obtener(indice);
     }
 
     /**
@@ -159,7 +160,7 @@ public class ListaArreglo<T> implements Lista<T> {
         if (this.elementos == otroLista.elementos)
             for (int i=0; i<=this.elementos; i++) {
                 if (this.obtener(i) == otroLista.obtener(i))
-                cant++;
+                    cant++;
             }
         return cant == this.elementos;
     }
@@ -173,9 +174,10 @@ public class ListaArreglo<T> implements Lista<T> {
     public String toString() {
         String result;
         result = "[";
-        for (int i=0; i<=elementos; i++) {
-            //result.append(obtener(i).toString()).append(", ");
-            result = result + obtener(i) + ", ";
+        for (int i=0; i<elementos; i++) {
+            result = result + String.valueOf(this.items[i]);
+            if (!(i == elementos-1))
+                result = result + ", ";
         }
         result = result + "]";
         return result;
@@ -206,9 +208,9 @@ public class ListaArreglo<T> implements Lista<T> {
     public Lista<T> subLista(int desdeInd, int hastaInd) {
         if ((desdeInd < 0) || (hastaInd > elementos))
             throw new IndexOutOfBoundsException("los indices de inicio y fin están fuera de rango");
-        ListaArreglo result = new ListaArreglo();
-        for (int i=desdeInd; i<=hastaInd; i++) {
-            result.agregar(this.obtener(i));
+        Lista<T> result = new ListaArreglo();
+        for (int i=desdeInd; i<hastaInd; i++) {
+            result.agregar(this.items[i]);
         }
         return result;
     }
