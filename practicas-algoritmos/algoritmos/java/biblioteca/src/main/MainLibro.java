@@ -22,14 +22,14 @@ public class MainLibro {
 		Libro libro3 = new Libro("Isaac Asimov", "The Naked Sun", 47);
 		Libro libro4 = new Libro("Julio Cortazar", "Rayuela", 728);
 		Libro libro5 = new Libro("Julio Cortazar", "Rayuela", 728);
-		Libro libro5 = new Libro("Julio C", "Rayuela", 728);
+		Libro libro6 = new Libro("Julio C", "Rayuela", 728);
 		System.out.println(libro1 + " y " + libro2 + "\nSon iguales usando equals? " + (libro1.equals(libro2)));
 		System.out.println(libro1 + " y " + libro2 + "\nSon iguales usando ==? " + (libro1 == libro2));
 		System.out.println(libro1 + " y " + libro3 + "\nSon iguales usando equals? " + (libro1.equals(libro3)));
 		System.out.println(libro1 + " y " + libro3 + "\nSon iguales usando ==? " + (libro1 == libro3));
 		System.out.println(libro4 == libro5);
 		System.out.println(libro4.equals(libro5));
-		System.out.println(libro4.equalN);
+		System.out.println(libro4.equals(libro6)); //test
 		//TODO: realice más pruebas
 	} 
 
