@@ -1,6 +1,9 @@
-package colecciones.cola;
+package cola;
 
 import java.util.Collection;
+import java.util.concurrent.ExecutionException;
+
+import lista.ListaArreglo;
 
 /**
 * Implementación basada en arreglos de tamaño fijo de la interfaz {@code Cola}.
@@ -50,47 +53,82 @@ public class ColaArregloFijo<T> implements Cola<T> {
 
 	@Override
 	public boolean esVacia() {
-		throw new UnsupportedOperationException("Implementar y eliminar esta sentencia");	
+		return elementos == 0;	
 	}
 
 	@Override
 	public int elementos() {
-		throw new UnsupportedOperationException("Implementar y eliminar esta sentencia");
+		return elementos;
 	}
 
 	@Override
 	public boolean encolar(T elem) {
-		throw new UnsupportedOperationException("Implementar y eliminar esta sentencia");		
+		if (elementos < CAPACIDAD_POR_DEFECTO) {
+			return false;
+		} else {
+			this.arreglo[elementos] = elem;
+			elementos ++;
+			return true;
+		}
 	}
 
 	@Override
 	public T desencolar() {
-		throw new UnsupportedOperationException("Implementar y eliminar esta sentencia");
+		if (this.esVacia()) {
+			throw new ArithmeticException("La lista está vacía.");
+		}
+		T elem = (T) this.arreglo[0];
+		for (int i = 0; i < elementos-1; i++) {
+			this.arreglo[i] = this.arreglo[i+1];
+		}
+		elementos --;
+		return elem;
 	}
 
 	@Override
 	public T primero() {
-		throw new UnsupportedOperationException("Implementar y eliminar esta sentencia");	
+		if (this.esVacia()) {
+			throw new ArithmeticException("La lista está vacía.");
+		} else {
+			return (T) this.arreglo[0];
+		}
 	}
 
 	@Override
 	public void vaciar() {
-		throw new UnsupportedOperationException("Implementar y eliminar esta sentencia");	
+		this.elementos = 0;	
 	}
 
 	@Override
 	public boolean repOK() {
-		throw new UnsupportedOperationException("Implementar y eliminar esta sentencia");	
+		return elementos <= CAPACIDAD_POR_DEFECTO;
+
 	}
 
 	@Override
 	public String toString() {
-		throw new UnsupportedOperationException("Implementar y eliminar esta sentencia");	
+		String result = "[";
+		for (int i = 0; i < this.elementos; i++) {
+			result = result + this.arreglo[i];
+			if (i != elementos-1) {
+				result = result + ", ";
+			}
+		}
+		return result + "]";
 	}
 
 	@Override
 	public boolean equals(Object other) {
-		throw new UnsupportedOperationException("Implementar y eliminar esta sentencia");	
+		if (!(other instanceof ColaArregloFijo))
+            return false;
+        ColaArregloFijo otraCola = (ColaArregloFijo) other;
+        int cant = 0;
+        if (this.elementos == otraCola.elementos)
+            for (int i=0; i<=this.elementos; i++) {
+                if (this.arreglo[i] == otraCola.arreglo[i])
+                    cant++;
+            }
+        return cant == this.elementos;	
 	}
 
 	/**
