@@ -27,12 +27,14 @@ public class ListaEnlazada<T> implements Lista<T> {
             return true;
         } else {
             Node<T> aux = new Node<T>();
-            Node<T> aux2 = new Node<T>(elem);
             aux = head;
             while (aux.getNext() != null) {
-               aux.setNext(aux.getNext());
+               aux = aux.getNext();
             }
-            aux.setNext(aux2.getNext());
+            Node<T> aux2 = new Node<T>(elem);
+            aux2.setNext(null);
+            aux.setNext(aux2);
+            cant++;
             return true;
         }        
     }
@@ -47,7 +49,7 @@ public class ListaEnlazada<T> implements Lista<T> {
             throw new IllegalArgumentException("otraLista es null");
         } else {
             for (int i = 0; i <= otraLista.elementos(); i++) {
-                agregar(otraLista.obtener(i));
+                this.agregar(otraLista.obtener(i));
             }
             return true;
         }  
@@ -68,10 +70,12 @@ public class ListaEnlazada<T> implements Lista<T> {
 
         Node<T> aux = new Node<T>();
         Node<T> aux2 = new Node<T>(elem);
+        aux = head;
+        aux2 = head;
         for (int i = 0; i < indice-1; i++) {
             aux.setNext(aux.getNext());
         }
-        aux2.setNext(aux.getNext());
+        aux2 = aux.getNext();
         aux.setNext(aux2);
         return true;
     }
@@ -87,8 +91,9 @@ public class ListaEnlazada<T> implements Lista<T> {
         if ((indice < 0) || (indice > this.elementos()))
             throw new IndexOutOfBoundsException("el indice esta fuera del rango válido");
         Node<T> aux = new Node<T>();
+        aux = head;
         for (int i = 0; i < indice; i++) {
-            aux.setNext(aux.getNext());
+            aux = aux.getNext();
         }
         aux.setNext(null);
         return aux.getInfo();
@@ -105,8 +110,9 @@ public class ListaEnlazada<T> implements Lista<T> {
         if ((indice < 0) || (indice > this.elementos()))
             throw new IndexOutOfBoundsException("el indice esta fuera del rango válido");
         Node<T> aux = new Node<T>();
-        for (int i = 0; i < cant; i++) {
-            aux.setNext(aux.getNext());
+        aux = head;
+        for (int i = 0; i < indice; i++) {
+            aux = aux.getNext();
         }
         return aux.getInfo();
     }
@@ -135,9 +141,12 @@ public class ListaEnlazada<T> implements Lista<T> {
      * @return {@code true} sii, existe un elemento {@code e} en la lista, tal que {@code e == null && elem == null || e.equals(elem)}
      */
     public boolean contiene(T elem) {
-        for (int i=0; i<=cant; i++) {
-            if (elem.equals(this.obtener(i)))
+        Node<T> aux = new Node<T>();
+        aux = head;
+        while (aux.getNext() != null) {
+            if (elem.equals(aux.getInfo()))
                 return true;
+            aux = aux.getNext();
         }
         return false;
     }
@@ -184,13 +193,15 @@ public class ListaEnlazada<T> implements Lista<T> {
     public String toString() {
         String result;
         result = "[";
-        for (int i=0; i<cant; i++) {
-            result = result + String.valueOf(this.obtener(i));
-            if (!(i == cant-1))
+        Node<T> aux = new Node<T>(head.getInfo());
+        aux = head;
+        while (aux != null) {
+            result = result + String.valueOf(aux.getInfo());
+            if (!(aux.getNext() == null))
                 result = result + ", ";
+            aux = aux.getNext();
         }
-        result = result + "]";
-        return result;
+        return result + "]";
     }
 
     /**
@@ -204,11 +215,17 @@ public class ListaEnlazada<T> implements Lista<T> {
             return false;
         ListaEnlazada<T> otroLista = (ListaEnlazada) otro;
         int cant = 0;
-        if (this.cant == otroLista.cant)
-            for (int i=0; i<=this.cant; i++) {
+        if (this.elementos() == otroLista.elementos()) {
+            Node<T> aux = new Node<T>();
+            int i = 0;
+            while (aux.getNext() != null) {
                 if (this.obtener(i) == otroLista.obtener(i))
                     cant++;
+                aux = aux.getNext();
+                i++;
             }
+        }
+            
         return cant == this.cant;
     }
 
