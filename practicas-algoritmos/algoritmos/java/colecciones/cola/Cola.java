@@ -1,4 +1,4 @@
-package colecciones.cola;
+package cola;
 
 
 /**
@@ -68,5 +68,14 @@ public interface Cola<T> {
 
 	@Override
 	public boolean equals(Object other);
+
+	// /**
+    //  * Obtiene un elemento de esta lista en una posición particular.
+    //  * @param indice el indice el elemento a obtener
+    //  * @return el elemento en la posición {@code indice}
+    //  * @throws IndexOutOfBoundsException si ({@code indice} &lt; {@code 0} || {@code indice} &ge; {@code #elementos()})
+    //  * @see #elementos()
+    //  */
+    // public T obtener(int indice);
 
 }

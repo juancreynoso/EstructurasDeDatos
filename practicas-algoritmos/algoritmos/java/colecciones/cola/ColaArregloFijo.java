@@ -3,8 +3,6 @@ package cola;
 import java.util.Collection;
 import java.util.concurrent.ExecutionException;
 
-import lista.ListaArreglo;
-
 /**
 * Implementación basada en arreglos de tamaño fijo de la interfaz {@code Cola}.
 * @see colecciones.cola.Cola
@@ -63,7 +61,7 @@ public class ColaArregloFijo<T> implements Cola<T> {
 
 	@Override
 	public boolean encolar(T elem) {
-		if (elementos < CAPACIDAD_POR_DEFECTO) {
+		if (elementos >= CAPACIDAD_POR_DEFECTO) {
 			return false;
 		} else {
 			this.arreglo[elementos] = elem;
@@ -75,7 +73,7 @@ public class ColaArregloFijo<T> implements Cola<T> {
 	@Override
 	public T desencolar() {
 		if (this.esVacia()) {
-			throw new ArithmeticException("La lista está vacía.");
+			throw new IllegalStateException("La lista está vacía.");
 		}
 		T elem = (T) this.arreglo[0];
 		for (int i = 0; i < elementos-1; i++) {
@@ -88,7 +86,7 @@ public class ColaArregloFijo<T> implements Cola<T> {
 	@Override
 	public T primero() {
 		if (this.esVacia()) {
-			throw new ArithmeticException("La lista está vacía.");
+			throw new IllegalStateException("La lista está vacía.");
 		} else {
 			return (T) this.arreglo[0];
 		}
@@ -136,7 +134,7 @@ public class ColaArregloFijo<T> implements Cola<T> {
 	* @param index el indice del elemento a obtener
 	*/
 	@SuppressWarnings("unchecked")
-   	private T elemento(int index) {
+   	public T elemento(int index) {
         	return (T) arreglo[index];
     	}
 

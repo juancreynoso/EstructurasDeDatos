@@ -21,7 +21,11 @@ public class ColaEnlazada<T> implements Cola<T> {
 
     public boolean encolar(T elem) {
         Node<T> puntero = new Node<T>(elem);
-        puntero = head;
+        if (this.esVacia()) {
+            head = puntero;
+            elementos++;
+            return true;
+        }
         while (puntero.getNext() != null) {
             puntero = puntero.getNext();
         }
@@ -59,12 +63,13 @@ public class ColaEnlazada<T> implements Cola<T> {
         return true;
     }
 
+    @Override
     public String toString() {
         String result = "[";
         Node<T> punt = new Node<T>();
         punt = head;
         while (punt != null) {
-            result = result + punt.getInfo();
+            result = result + String.valueOf(punt.getInfo());
             if (punt.getNext() != null) {
                 result = result + ", ";
             }
