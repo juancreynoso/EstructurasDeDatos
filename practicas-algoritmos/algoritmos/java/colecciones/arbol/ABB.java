@@ -74,21 +74,24 @@ public class ABB<T> implements Diccionario<T> {
      * {@inheritDoc}
      */
     public boolean pertenece(T elem) {
-        if (raiz.getValor() == elem) {
-            return true;
+        if (this.raiz == null) {
+            return false;
         }
-        return true;
+        return this.perteneceRecursivo(raiz,elem);
     }
 
-    public NodoBinario<T> perteneceRec(T elem, NodoBinario<T> nuevaRaiz) {
-        int cmp = comparador.compare(elem, nuevaRaiz.getValor());
+    private boolean perteneceRecursivo (NodoBinario<T> newRaiz,T elem){
+        int cmp = comparador.compare(newRaiz.getValor(),elem);
+        if (newRaiz.getValor() == null) {
+            return false;
+        }
         if (cmp == 0) {
-            return nuevaRaiz;
+            return true;
         }
         if (cmp > 0) {
-            nuevaRaiz.setDerecho(perteneceRec(elem, nuevaRaiz.getDerecho()));
+            return this.perteneceRecursivo(newRaiz.getIzquierdo(),elem);
         } else {
-            nuevaRaiz.setIzquierdo(perteneceRec(elem, nuevaRaiz.getIzquierdo()));
+            return this.perteneceRecursivo(newRaiz.getDerecho(), elem);
         }
     }
 
@@ -98,7 +101,34 @@ public class ABB<T> implements Diccionario<T> {
      */
     @Override
     public void borrar(T elem) {
-        throw new UnsupportedOperationException("TODO: implementar");
+        return this.borrarRec(elem);
+    }
+
+    private boolean borrarRec(NodoBinario<T> nodo, T elem){
+        int cmp = comparador.compare(nodo.getValor(),elem);
+        if (cmp == 0) {
+            if (nodo.getIzquierdo() == null && nodo.getDerecho() == null) {
+                nodo = null;
+            }
+            if (nodo.getIzquierdo() == null && nodo.getDerecho() != null) {
+                nodo = nodo.getDerecho();
+            }
+
+            if (nodo.getIzquierdo() != null && nodo.getDerecho() == null) {
+                nodo = nodo.getIzquierdo();
+            }
+
+            if (nodo.getIzquierdo() != null && nodo.getDerecho() != null) {
+                nodo = nodo.getDerecho();
+            }
+        }
+        if (cmp > 0) {
+            return this.borrarRec(nodo.getIzquierdo(), elem);
+        }
+        if (cmp < 0) {
+            return this.borrarRec(nodo.getDerecho(), elem);
+        }
+
     }
 
 
@@ -142,7 +172,6 @@ public class ABB<T> implements Diccionario<T> {
         if (this.raiz == null) {
             return 0;
         }
-
         return 1 ;
     }
 
@@ -159,14 +188,21 @@ public class ABB<T> implements Diccionario<T> {
      */
     @Override
     public boolean esVacio() {
-        throw new UnsupportedOperationException("TODO: implementar");
+        return this.raiz == null;
     }
 
     /**
      * {@inheritDoc}
      */
     public T mayorValor(){
-        throw new UnsupportedOperationException("TODO: implementar");
+        if (this.esVacio() || this.raiz == null) {
+            throw new IllegalStateException("el arbol es null o vacío");
+        }
+        ABB<T> tree = this;
+        while (tree.raiz.getDerecho() != null) {
+            tree.raiz.setDerecho(tree.raiz.getDerecho());
+        }
+        return tree.raiz.getValor();
     }
 
     /**
@@ -174,7 +210,14 @@ public class ABB<T> implements Diccionario<T> {
      */
     @Override
     public T menorValor() {
-        throw new UnsupportedOperationException("TODO: implementar");
+        if (this.raiz == null || this.raiz.getValor() == null) {
+            throw new IllegalStateException("el arbol es null o vacío");
+        }
+        ABB<T> tree = this;
+        while (tree.raiz.getIzquierdo() != null) {
+            tree.raiz.setIzquierdo(tree.raiz.getIzquierdo());
+        }
+        return tree.raiz.getValor();
     }
 
     /**
@@ -206,7 +249,12 @@ public class ABB<T> implements Diccionario<T> {
      */
     @Override
     public String toString() {
-        throw new UnsupportedOperationException("TODO: implementar");
+        String result = "";
+        if (this.esVacio()) {
+            result = "{}";
+        }
+
+        return result;
     }
 
     /**
