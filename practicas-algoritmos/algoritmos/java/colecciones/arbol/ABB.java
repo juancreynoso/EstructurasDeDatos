@@ -33,7 +33,8 @@ public class ABB<T> implements Diccionario<T> {
      * @param valor de la raiz del nuevo arbol si no es null.
      */
     public ABB(Comparator<? super T> comparador, T valor) {
-        throw new UnsupportedOperationException("TODO: implementar");
+        this.comparador = comparador;
+        this.raiz = new NodoBinario<>(valor);
     }
 
 
@@ -42,7 +43,30 @@ public class ABB<T> implements Diccionario<T> {
      */
     @Override
     public void insertar(T elem) {
-        throw new UnsupportedOperationException("TODO: implementar");
+        if (this.pertenece(elem)) {
+            throw new IllegalArgumentException("El elemento ya se encuentra en el árbol");
+        }
+        if (raiz.getValor() == null) {
+            raiz.setValor(elem);
+        } else {
+            this.insRec(elem, raiz);
+        }
+    }
+
+    private NodoBinario<T> insRec(T elem, NodoBinario<T> newRaiz) {
+        if (newRaiz == null) {
+            return new NodoBinario<>(elem);
+        }
+        int cmp = comparador.compare(elem, newRaiz.getValor());
+        if (cmp == 0) {
+            return newRaiz;
+        }
+        if (cmp < 0) {
+            newRaiz.setIzquierdo(insRec(elem, newRaiz.getIzquierdo()));
+        } else {
+            newRaiz.setDerecho(insRec(elem, newRaiz.getDerecho()));
+        }
+        return newRaiz;
     }
 
 
@@ -50,7 +74,22 @@ public class ABB<T> implements Diccionario<T> {
      * {@inheritDoc}
      */
     public boolean pertenece(T elem) {
-        throw new UnsupportedOperationException("TODO: implementar");
+        if (raiz.getValor() == elem) {
+            return true;
+        }
+        return true;
+    }
+
+    public NodoBinario<T> perteneceRec(T elem, NodoBinario<T> nuevaRaiz) {
+        int cmp = comparador.compare(elem, nuevaRaiz.getValor());
+        if (cmp == 0) {
+            return nuevaRaiz;
+        }
+        if (cmp > 0) {
+            nuevaRaiz.setDerecho(perteneceRec(elem, nuevaRaiz.getDerecho()));
+        } else {
+            nuevaRaiz.setIzquierdo(perteneceRec(elem, nuevaRaiz.getIzquierdo()));
+        }
     }
 
 
@@ -76,7 +115,7 @@ public class ABB<T> implements Diccionario<T> {
      */
     @Override
     public T raiz() {
-        throw new UnsupportedOperationException("TODO: implementar");
+        return raiz.getValor();
     }
 
     /**
@@ -100,7 +139,11 @@ public class ABB<T> implements Diccionario<T> {
      */
     @Override
     public int elementos() {
-        throw new UnsupportedOperationException("TODO: implementar");
+        if (this.raiz == null) {
+            return 0;
+        }
+
+        return 1 ;
     }
 
     /**
@@ -108,7 +151,7 @@ public class ABB<T> implements Diccionario<T> {
      */
     @Override
     public int altura() {
-        throw new UnsupportedOperationException("TODO: implementar");
+        return raiz.getAltura();
     }
 
     /**
