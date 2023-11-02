@@ -214,10 +214,10 @@ public class ABB<T> implements Diccionario<T> {
             throw new IllegalStateException("el arbol es null o vacío");
         }
         NodoBinario<T> otro = raiz;
-        while (otro.getDerecho() != null) {
-            otro.setDerecho(otro.getDerecho());
+        while (otro.getDerecho().getDerecho() != null) {
+            otro = (otro.getDerecho());
         }
-        return otro.getValor();
+        return otro.getDerecho().getValor();
     }
 
     /**
@@ -228,11 +228,11 @@ public class ABB<T> implements Diccionario<T> {
         if (this.raiz == null || this.raiz.getValor() == null) {
             throw new IllegalStateException("el arbol es null o vacío");
         }
-        ABB<T> tree = this;
-        while (tree.raiz.getIzquierdo() != null) {
-            tree.raiz.setIzquierdo(tree.raiz.getIzquierdo());
+        NodoBinario<T> otro = raiz;
+        while (otro.getIzquierdo().getIzquierdo() != null) {
+            otro = (otro.getIzquierdo());
         }
-        return tree.raiz.getValor();
+        return otro.getIzquierdo().getValor();
     }
 
     /**
@@ -265,7 +265,7 @@ public class ABB<T> implements Diccionario<T> {
     @Override
     public String toString() {
         if (this.esVacio()) {
-            return "{}";
+            return "Árbol vacío.";
         }
         return String.valueOf(this.aLista());
     }
